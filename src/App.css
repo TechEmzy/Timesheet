@@ -1,38 +1,125 @@
-.App {
+body{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: beige;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* header section */
+.header {
+  background-color: #fff;
+  padding: 3px;
+  box-shadow: 3px -4px 18px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  text-transform: capitalize;
+  margin-bottom: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+h1{
+  font-family: cursive;
+  color: rgba(0, 119, 255, 0.979);
+  font-size: 40px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Home components */
+table{
+  margin-top: 100px;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 auto;
+ }
+
+.table-heading {
+color: #54585d;
+font-weight: bold;
+font-size: 18px;
+border: 1px solid #dddfe1;
+}
+
+td{
+  color: #636363;
+  border: 1px solid #dddfe1;
+  padding: 12px;
+}
+
+th{
+  padding: 20px;
+  border: 1px solid #dddfe1;;
+}
+
+.edit-button{
+  background-color: rgba(0, 119, 255, 0.979);
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.delete-button{
+  background-color: rgba(0, 119, 255, 0.979);
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.create-button{
+  background-color: rgba(0, 119, 255, 0.979);
+  color: #fff;
+  border: 0;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 300px;
+  font-weight: 900;
+}
+
+/* Create new employee */
+h2{
+font-size: 20px;
+color: #636363;
+margin-bottom: 30px;
+}
+.create{
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+label{
+  text-align: left;
+  display: block;
+}
+
+input{
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+
+select{
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block
+}
+
+.submit{
+  background-color: rgba(0, 119, 255, 0.979);
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
 }
