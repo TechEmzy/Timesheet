@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Employees from "./Employees";
 import {useNavigate} from 'react-router-dom';
+import moment from "moment";
 
 
 const Edit = () => {
@@ -11,7 +12,7 @@ const Edit = () => {
     const [taskTitle, setTaskTitle] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
-    const [timeSpent, setTimeSpent] = useState("");
+    // const [timeSpent, setTimeSpent] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
 
     let navigate = useNavigate();
@@ -22,21 +23,33 @@ const Edit = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+    
         const index = Employees.findIndex((employee) => employee.id === id);
         const employee = Employees[index];
-
-        // let a = Employees[index];
-        employee.name = name;
-        employee.gender = gender;
-        employee.taskTitle = taskTitle;
-        employee.startTime = startTime;
-        employee.endTime = endTime;
-        employee.timeSpent = timeSpent;
-        employee.taskDescription = taskDescription;
-
+    
+        // calculate the time difference
+        const start = moment(startTime, "HH:mm");
+        const end = moment(endTime, "HH:mm");
+        const diff = end.diff(start);
+        const duration = moment.duration(diff);
+        const hours = Math.floor(duration.asHours());
+        const minutes = duration.minutes();
+    
+        const updatedEmployee = {
+          ...employee,
+          name,
+          gender,
+          taskTitle,
+          startTime,
+          endTime,
+          taskDescription,
+          timeDifference: `${hours}:${minutes}`
+        };
+    
+        Employees[index] = updatedEmployee;
+    
         navigate("/");
-    }
+    };
 
   useEffect(() => {
   const savedId = localStorage.getItem('id');
@@ -46,8 +59,9 @@ const Edit = () => {
   setTaskTitle(localStorage.getItem("taskTitle") || "");
   setStartTime(localStorage.getItem("startTime") || "");
   setEndTime(localStorage.getItem("endTime") || "");
-  setTimeSpent(localStorage.getItem("timeSpent") || "");
+//   setTimeSpent(localStorage.getItem("timeSpent") || "");
   setTaskDescription(localStorage.getItem("taskDescription") || "");
+
 }, []);
 
 
@@ -77,7 +91,7 @@ const Edit = () => {
                 <input
                     type = "text"
                     required
-                    value = {taskTitle || ""}
+                    value = {taskTitle}
                     onChange={(event) => setTaskTitle(event.target.value)}
                 />
 
@@ -85,7 +99,7 @@ const Edit = () => {
                 <input
                     type = "time"
                     className="inputDate"
-                    name="worked_start"
+                    // name="worked_start"
                     autoComplete="off"
                     required
                     value = {startTime}
@@ -96,26 +110,18 @@ const Edit = () => {
                 <input
                     type = "time"
                     className="inputDate"
-                    name="worked_start"
+                    // name="worked_start"
                     autoComplete="off"
                     required
                     value = {endTime}
                     onChange={(event) => setEndTime(event.target.value)}
                 />
 
-                {/* <label>Time-spent:</label>
-                <input
-                    type = "text"
-                    required
-                    value = {timeSpent}
-                    onChange={(event) => setTimeSpent(event.target.value)}
-                /> */}
-
                 <label>Task-description:</label>
                 <input
                     type = "text"
                     required
-                    value = {taskDescription || ""}
+                    value = {taskDescription}
                     onChange={(event) => setTaskDescription(event.target.value)}
                 />
                 
@@ -128,3 +134,23 @@ const Edit = () => {
 }
  
 export default Edit;
+
+
+
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+
+    //     const index = Employees.findIndex((employee) => employee.id === id);
+    //     const employee = Employees[index];
+
+    //     // let a = Employees[index];
+    //     employee.name = name;
+    //     employee.gender = gender;
+    //     employee.taskTitle = taskTitle;
+    //     employee.startTime = startTime;
+    //     employee.endTime = endTime;
+    //     employee.timeSpent = timeSpent;
+    //     employee.taskDescription = taskDescription;
+
+    //     navigate("/");
+    // }

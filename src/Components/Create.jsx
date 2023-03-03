@@ -10,55 +10,32 @@ const Create = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
-  const [timeDifference, setTimeDifference] = useState(""); // Add timeSpent state
 
   let navigate = useNavigate();
 
-  // Calculate the time difference in minutes
-  // const calcSpent = () => {
-  //   const start = moment(startTime, "HH:mm");
-  //   const end = moment(endTime, "HH:mm");
-  //   const diff = end.diff(start);
-  //   const duration = moment.duration(diff);
-  //   const hours = Math.floor(duration.asHours());
-  //   const minutes = duration.minutes();
-  //   setTimeSpent(`${hours} : ${minutes}`)
-  // }
-
-  // Add item to the timesheet table
-  const handleSubmit = (event) => {
+  const handleSubmit = ( event ) => {
     event.preventDefault();
-
-    let ids = Employees.length + 1;
-
-    let a = name,
-      b = gender,
-      c = taskTitle,
-      d = startTime,
-      e = endTime,
-      g = taskDescription;
-
-    // calcSpent(); // Call calcSpent() function
-
-    Employees.push({
-      id: ids,
-      name: a,
-      gender: b,
-      taskTitle: c,
-      startTime: d,
-      endTime: e,
-      timeDifference: timeDifference, // Add timeSpent to Employees array
-      taskDescription: g,
-    });
-
     
-      const start = moment(startTime, 'HH:mm:ss');
-      const end = moment(endTime, 'HH:mm:ss');
-      const duration = moment.duration(end.diff(start));
-      setTimeDifference(duration.asHours().toFixed(2));
-    
+    //calculate the time difference
+    const start = moment( startTime, "HH:mm" );
+    const end = moment( endTime, "HH:mm" );
+    const diff = end.diff( start );
+    const duration = moment.duration( diff );
+    const hours = Math.floor( duration.asHours() );
+    const minutes = duration.minutes();
 
-    navigate("/");
+    const payload = {
+      id: Employees.length + 1,
+      name,
+      gender,
+      taskTitle,
+      startTime,
+      endTime,
+      taskDescription,
+      timeDifference: `${hours}hrs:${minutes}mins`
+    }
+    Employees.push( payload );
+    navigate( "/" );
   };
 
   return (
