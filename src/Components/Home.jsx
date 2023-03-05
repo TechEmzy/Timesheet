@@ -1,29 +1,19 @@
-import React, { useState } from "react";
-import Employees from "./Employees";
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
+import { deleteScheduleInLocalStorage, readLocalStorage } from "../utils/localStorageManager";
 
 const Home = () => {
-  const [employees, setEmployees] = useState(Employees);
-  const navigate = useNavigate();
+  const [employees, setEmployees] = useState([]);
 
   // Delete item from the timesheet table
   const handleDelete = (id) => {
-    const filteredEmployees = employees.filter((employee) => employee.id !== id);
-    setEmployees(filteredEmployees);
-    navigate('/');
+    deleteScheduleInLocalStorage( id )
+    setEmployees( readLocalStorage() )
   }
 
-  // Edit or update item from the timesheet table
-  const handleEdit = (id, name, gender, taskTitle, startTime, endTime, timeDifference, taskDescription) => {
-    localStorage.setItem('id', id);
-    localStorage.setItem('name', name);
-    localStorage.setItem('gender', gender);
-    localStorage.setItem('taskTitle', taskTitle);
-    localStorage.setItem('startTime', startTime);
-    localStorage.setItem('endTime', endTime);
-    localStorage.setItem('timeDifference', timeDifference);
-    localStorage.setItem('taskDescription', taskDescription);
-  }
+  useEffect( () => {
+    setEmployees( readLocalStorage() )
+  }, [])
 
 
   return (
@@ -61,14 +51,14 @@ const Home = () => {
                   <td>{employee.taskTitle}</td>
                   <td>{employee.startTime}</td>
                   <td>{employee.endTime}</td>
-                  <td>{employee.timeDifference}</td>
+                  <td>{ employee.timeSpent }</td>
                   <td>{employee.taskDescription}</td>
                   <td>
-                    <Link to={"/edit"}>
-                      <button className="edit-button" onClick={() => handleEdit(employee.id, employee.name, employee.gender, employee.taskTitle, employee.startTime, employee.endTime, employee.taskDescription)}> EDIT </button>
+                    <Link state={ { id: employee.id }} to={"/edit"}>
+                      <button className="edit-button"> EDIT </button>
                     </Link>
                     &nbsp;
-                    <button className="delete-button" onClick={() => handleDelete(employee.id)}> DELETE </button>
+                    <button onClick={ () => handleDelete(employee.id)} className="delete-button"> DELETE </button>
                   </td>
                 </tr>
               )
